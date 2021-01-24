@@ -2,6 +2,7 @@
 # cycle journeys and converts this into an indexed form.
 import re
 import csv
+import numpy as np
 from TFLBikeViewer.CycleData import CycleData
 
 class CycleDataFile:
@@ -64,8 +65,15 @@ class CycleDataFile:
                         self.cycleData.append(newCycleData)
                         # DEBUG
                         # print station ids
-                        print(row[headerIndex['startstationid']], '=>', row[headerIndex['endstationid']])
+                        #print(row[headerIndex['startstationid']], '=>', row[headerIndex['endstationid']])
                         lineCount += 1
+                # Sort date and cycle data
+                print('Sorting data')
+                self.cycleData.sort(key=lambda x:x.startDate)
+                print('finished sorting data')
 
         except IOError:
             print('Unable to load file')
+
+    def filter(self, startDate, endDate):
+        return list(filter(lambda cd: cd.startDate >= startDate and cd.startDate <= endDate, self.cycleData));
