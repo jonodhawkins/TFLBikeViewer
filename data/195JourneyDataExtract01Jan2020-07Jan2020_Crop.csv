@@ -1,0 +1,6 @@
+Rental Id,Duration,Bike Id,End Date,EndStation Id,EndStation Name,Start Date,StartStation Id,StartStation Name
+94113398,960,6800,07/01/2020 14:07,541,"Green Park Station, Mayfair",07/01/2020 13:51,164,"Cleveland Gardens, Bayswater"
+94117049,600,8691,07/01/2020 17:06,48,"Godliman Street, St. Paul's",07/01/2020 16:56,323,"Clifton Street, Shoreditch"
+94110497,540,531,07/01/2020 11:01,654,"Ashmole Estate, Oval",07/01/2020 10:52,624,"Courland Grove, Wandsworth Road"
+94050449,600,8150,04/01/2020 12:27,685,"Osiers Road, Wandsworth",04/01/2020 12:17,774,"Hurlingham Park, Parsons Green"
+94019122,1140,15515,02/01/2020 16:31,676,"Hartington Road, Stockwell",02/01/2020 16:12,83,"Panton Street, West End"
