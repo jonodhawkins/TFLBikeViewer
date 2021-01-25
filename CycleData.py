@@ -25,7 +25,7 @@ class CycleData:
         self.startDate = datetime.strptime(self.startDate, '%d/%m/%Y %H:%M')
         self.endDate = datetime.strptime(self.endDate, '%d/%m/%Y %H:%M')
 
-    def loadSteps(self, bikePointLib):
+    def loadSteps(self, bikePointLib, routeLib):
 
         if not bikePointLib.isLoaded():
             bikePointLib.load()
