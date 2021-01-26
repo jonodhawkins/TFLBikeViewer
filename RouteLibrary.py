@@ -25,7 +25,8 @@ class RouteLibrary:
             with open(fileLocation, 'rb') as libFile:
                 self.data = pickle.load(libFile)
                 libFile.close()
-                # Iterate through data and count number of points
+                # Iterate through data and count number of points (i.e. number
+                # of routes)
                 for startIdxList in self.data:
                     for endIdxList in self.data[startIdxList]:
                         self.numRoutes += 1
