@@ -134,7 +134,9 @@ class RouteStore:
 
         # Get direction information
         try:
-            reqURL = "https://api.tfl.gov.uk/Journey/JourneyResults/{},{}/to/{},{}?mode=cycle&app_key={}".format(
+            # NOTE: Specifying cyclePreference=cycleHire seems to prevent a
+            # 500 return code (NullReferenceException) - weird...
+            reqURL = "https://api.tfl.gov.uk/Journey/JourneyResults/{},{}/to/{},{}?mode=cycle&cyclePreference=cycleHire&app_key={}".format(
                 startPoint['latitude'], startPoint['longitude'],
                 endPoint['latitude'], endPoint['longitude'],
                 self.APP_KEY_VALUE
@@ -147,6 +149,15 @@ class RouteStore:
         except json.decoder.JSONDecodeError:
             print('JSON ERROR')
             print(journeyReqTxt)
+            return lat,lon
+
+        # Check for disambiguation errors
+        if 'fromLocationDisambiguation' in journeyReq:
+            print('disambiguation error for ', startPointIdx)
+            return lat,lon
+
+        if 'toLocationDisambiguation' in journeyReq:
+            print('disambiguation error for ', endPointIdx)
             return lat,lon
 
         print('Using URL lookup', startIdx, endIdx)
@@ -382,7 +393,6 @@ class JourneyStore:
             End date for filter condition
         """
         return list(filter(
-                lambda cd: (cd.startDate >= startDate and cd.startDate <= endDate)
-                        or (cd.endDate >= startDate and cd.endDate <= endDate),
+                lambda cd: (cd.startDate <= startDate and cd.endDate >= endDate),
                 self.journeys
                ))
