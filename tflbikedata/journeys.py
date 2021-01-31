@@ -15,6 +15,7 @@ class Journey:
     """
 
     def __init__(self, id, duration, bikeId, endDate, endStationId, endStationName, startDate, startStationId, startStationName):
+
         self.id = int(id)
         self.duration = int(duration)
         self.bikeId = bikeId
@@ -94,7 +95,10 @@ class Journey:
         prevDistance = 0
         while idx < len(self.distance):
             # Check whether we are in the current leg
-            cFractDistance = (prevDistance+self.distance[idx])/self.totalDistance
+            if self.totalDistance == 0:
+                cFractDistance = 0
+            else:
+                cFractDistance = (prevDistance+self.distance[idx])/self.totalDistance
 
             if cFractDistance >= fractDuration:
                 if self.distance[idx] == 0:

@@ -255,6 +255,14 @@ class BikePointStore:
         else:
             return False
 
+    # Get the number of routes
+    def getNumBikePoints(self):
+        return len(self.name)
+
+    # Get the number of routes
+    def getHighestId(self):
+        return max(self.name.keys())
+
     def getBikepointInfoFromId(self, id):
         # Check whether bike point exists
         if id in self.latitude and id in self.longitude and id in self.name:
@@ -340,7 +348,20 @@ class JourneyStore:
                                 headerCount += 1
                         lineCount += 1
                     else:
-                        newCycleData = tflbikedata.Journey(row[headerIndex['rentalid']],
+
+
+                        if  len(row[headerIndex['rentalid']]) == 0 or \
+                            len(row[headerIndex['duration']]) == 0 or \
+                            len(row[headerIndex['bikeid']]) == 0 or \
+                            len(row[headerIndex['enddate']]) == 0 or \
+                            len(row[headerIndex['endstationid']]) == 0 or \
+                            len(row[headerIndex['endstationname']]) == 0 or \
+                            len(row[headerIndex['startstationid']]) == 0 or \
+                            len(row[headerIndex['startstationname']]) == 0:
+                            print('Error with row')
+                            print(row)
+                        else:
+                            newCycleData = tflbikedata.Journey(row[headerIndex['rentalid']],
                                                  row[headerIndex['duration']],
                                                  row[headerIndex['bikeid']],
                                                  row[headerIndex['enddate']],
@@ -349,8 +370,8 @@ class JourneyStore:
                                                  row[headerIndex['startdate']],
                                                  row[headerIndex['startstationid']],
                                                  row[headerIndex['startstationname']]);
-                        # Add to list of data
-                        self.journeys.append(newCycleData)
+                            # Add to list of data
+                            self.journeys.append(newCycleData)
                         # DEBUG
                         # print station ids
                         #print(row[headerIndex['startstationid']], '=>', row[headerIndex['endstationid']])
@@ -360,8 +381,9 @@ class JourneyStore:
                 self.journeys.sort(key=lambda x:x.startDate)
                 print('finished sorting data')
 
-        except IOError:
+        except IOError as fileIOerror:
             print('Unable to load file')
+            print(fileIOerror)
 
     def filterStarted(self, startDate, endDate):
         """
